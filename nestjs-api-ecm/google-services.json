@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "200305823558",
+    "firebase_url": "https://testfirebase-62e07-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "testfirebase-62e07",
+    "storage_bucket": "testfirebase-62e07.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:200305823558:android:8dec64046463e5b5c25f47",
+        "android_client_info": {
+          "package_name": "com.example.app_music"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3wB3tuk3BGlF7Z3wN2owls1QLMaBtXoQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
