@@ -7,25 +7,78 @@ export default defineConfig({
     viewportHeight: 720,
 
     setupNodeEvents(on, config) {
-      // Có thể để trống hoặc thêm plugins sau
+      // Valid events only - no uncaught:exception here
+
+      // Handle before:browser:launch
+      on("before:browser:launch", (browser = {}, launchOptions) => {
+        if (browser.name === "chrome") {
+          launchOptions.args.push("--disable-web-security");
+          launchOptions.args.push("--disable-site-isolation-trials");
+          launchOptions.args.push("--disable-features=VizDisplayCompositor");
+        }
+        return launchOptions;
+      });
+
+      // Handle task events
+      on("task", {
+        log(message) {
+          console.log(message);
+          return null;
+        },
+      });
+
       return config;
     },
 
     specPattern: "cypress/e2e/**/*.cy.js",
     supportFile: "cypress/support/e2e.js",
 
-    // Cấu hình cơ bản
-    video: false, // Tắt video để tăng tốc
+    // Basic configuration
+    video: false,
     screenshotOnRunFailure: true,
     chromeWebSecurity: false,
+    watchForFileChanges: false,
 
     // Timeouts
-    defaultCommandTimeout: 8000,
-    requestTimeout: 8000,
-    responseTimeout: 8000,
+    defaultCommandTimeout: 10000,
+    requestTimeout: 10000,
+    responseTimeout: 10000,
+    pageLoadTimeout: 60000,
+
+    // Retry configuration
+    retries: {
+      runMode: 2,
+      openMode: 0,
+    },
+
+    // Test isolation
+    testIsolation: true,
+
+    // Environment variables
+    env: {
+      apiUrl: "http://localhost:6006",
+      testUser: {
+        email: "test@example.com",
+        password: "password123",
+        userId: "test-user-id",
+      },
+      enableMockAPIs: true,
+    },
+
+    // Include/exclude patterns
+    excludeSpecPattern: [
+      "**/examples/*",
+      "**/node_modules/**/*",
+      "**/dist/**/*",
+    ],
   },
 
-  env: {
-    apiUrl: "http://localhost:6006",
+  component: {
+    devServer: {
+      framework: "react",
+      bundler: "vite",
+    },
+    viewportWidth: 1000,
+    viewportHeight: 660,
   },
 });
