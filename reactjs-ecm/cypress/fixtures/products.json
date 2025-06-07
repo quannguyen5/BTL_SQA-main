@@ -1,0 +1,19 @@
+{
+    "success": true,
+    "data": {
+        "products": [
+            {
+                "id": "1",
+                "name": "Thức ăn cho gà",
+                "priceout": 50000,
+                "category": {
+                    "name": "Gà"
+                },
+                "url_images": "{\"url_images1\":\"https://via.placeholder.com/300x300\"}",
+                "stockQuantity": 100,
+                "weight": 30
+            }
+        ],
+        "total": 1
+    }
+}

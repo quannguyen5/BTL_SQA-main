@@ -1,0 +1,10 @@
+{
+    "success": true,
+    "data": {
+        "accessToken": "fake-jwt-token",
+        "user": {
+            "id": "user123",
+            "role": "user"
+        }
+    }
+}
