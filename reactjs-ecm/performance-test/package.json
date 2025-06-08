@@ -1,0 +1,31 @@
+{
+    "name": "performance-testing",
+    "version": "2.0.0",
+    "description": "Comprehensive Lighthouse performance testing suite for React e-commerce app",
+    "main": "performance-test.js",
+    "scripts": {
+        "test:basic": "node performance-test.js",
+        "test:single": "node single-page-test.js",
+        "test:comprehensive": "node comprehensive-performance-test.js",
+        "test:mobile-vs-desktop": "node mobile-desktop-comparison.js",
+        "test:monitoring": "node batch-monitoring-test.js",
+        "test:quick": "node single-page-test.js http://localhost:5173/home-page",
+        "test:all": "npm run test:comprehensive && npm run test:mobile-vs-desktop",
+        "clean:reports": "rm -rf ./reports && mkdir reports",
+        "view:reports": "open ./reports/summary-report.html"
+    },
+    "dependencies": {
+        "lighthouse": "9.6.8",
+        "chrome-launcher": "^0.15.2"
+    },
+    "devDependencies": {},
+    "keywords": [
+        "lighthouse",
+        "performance",
+        "testing",
+        "monitoring",
+        "e-commerce"
+    ],
+    "author": "",
+    "license": "MIT"
+}
