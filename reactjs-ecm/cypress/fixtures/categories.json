@@ -1,0 +1,19 @@
+{
+    "success": true,
+    "data": {
+        "data": [
+            {
+                "id": "cat-1",
+                "name": "Gà"
+            },
+            {
+                "id": "cat-2",
+                "name": "Heo"
+            },
+            {
+                "id": "cat-3",
+                "name": "Cá"
+            }
+        ]
+    }
+}

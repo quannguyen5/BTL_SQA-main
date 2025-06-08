@@ -1,0 +1,15 @@
+{
+    "success": true,
+    "data": {
+        "data": [
+            {
+                "id": "addr-1",
+                "name": "Nguyễn Văn A",
+                "address": "123 Test Street, District 1, Ho Chi Minh City",
+                "phone": "0987654321",
+                "default_location": true,
+                "user_id": "test-user-123"
+            }
+        ]
+    }
+}

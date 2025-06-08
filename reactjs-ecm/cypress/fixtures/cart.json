@@ -3,13 +3,15 @@
     "data": {
         "cart": [
             {
-                "id": "cart1",
+                "id": "cart-1",
                 "quantity": 2,
+                "product_id": "product-1",
                 "product": {
-                    "id": "1",
+                    "id": "product-1",
                     "name": "Thức ăn cho gà",
                     "priceout": 50000,
-                    "url_images": "{\"url_images1\":\"https://via.placeholder.com/300x300\"}"
+                    "weight": 30,
+                    "url_images": "{\"url_images1\":\"https://via.placeholder.com/300\"}"
                 }
             }
         ],

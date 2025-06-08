@@ -8,12 +8,14 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test:cypress": "cypress run",
-    "test:cypress:open": "cypress open",
-    "test:cypress:cart": "cypress run --spec 'cypress/e2e/cart.cy.js'",
-    "test:cypress:checkout": "cypress run --spec 'cypress/e2e/checkout.cy.js'",
-    "test:cypress:profile": "cypress run --spec 'cypress/e2e/profile.cy.js'",
-    "test:cypress:visual": "cypress run --spec 'cypress/e2e/visual.cy.js'"
+    "test": "cypress run",
+    "test:open": "cypress open",
+    "test:cart": "cypress run --spec 'cypress/e2e/cart.cy.js'",
+    "test:checkout": "cypress run --spec 'cypress/e2e/checkout.cy.js'",
+    "test:navigation": "cypress run --spec 'cypress/e2e/navigation.cy.js'",
+    "test:headless": "cypress run --headless",
+    "test:chrome": "cypress run --browser chrome",
+    "test:firefox": "cypress run --browser firefox"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.6.0",

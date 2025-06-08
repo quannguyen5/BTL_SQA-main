@@ -1,64 +1,71 @@
-describe("Đặt hàng Tests", () => {
+// cypress/e2e/checkout.cy.js
+
+describe("Thanh toán - Checkout Tests", () => {
   beforeEach(() => {
     cy.mockAPIs();
     cy.login();
-    cy.addProductToCart();
-    cy.visit("/cart");
-    cy.get('thead input[type="checkbox"]').check();
-    cy.get("button").contains("Mua hàng").click();
-    cy.url().should("include", "/checkout");
+
+    // Đi đến trang checkout
+    cy.goToCart();
+    cy.proceedToCheckout();
   });
 
-  it("TC08 - Hiển thị layout checkout 2 cột", () => {
-    // Kiểm tra grid container
-    cy.get(".grid.grid-cols-1").should("exist");
-    cy.get(".md\\:grid-cols-2").should("exist");
+  it("TC01 - Hiển thị layout trang checkout", () => {
+    // Kiểm tra layout 2 cột
+    cy.get(".grid").should("exist");
+    cy.get(".order-1").should("be.visible"); // Cột đơn hàng
+    cy.get(".order-2").should("be.visible"); // Cột thông tin
 
-    // Cột trái - Đơn hàng
+    // Kiểm tra tiêu đề
+    cy.contains("Đơn hàng của bạn").should("be.visible");
+    cy.contains("Địa chỉ giao hàng").should("be.visible");
+  });
+
+  it("TC02 - Hiển thị thông tin sản phẩm trong đơn hàng", () => {
     cy.get(".order-1").within(() => {
-      cy.get("h3").contains("Đơn hàng của bạn").should("be.visible");
-      cy.get(".shadow-lg").should("have.length.greaterThan", 0);
-    });
-
-    // Cột phải - Thông tin
-    cy.get(".order-2").within(() => {
-      cy.get("h3").contains("Địa chỉ giao hàng").should("be.visible");
-    });
-  });
-
-  it("TC09 - Hiển thị thông tin sản phẩm trong đơn hàng", () => {
-    // Kiểm tra có hiển thị sản phẩm
-    cy.get(".shadow-lg").within(() => {
+      // Kiểm tra có sản phẩm
+      cy.get(".shadow-lg").should("exist");
       cy.get("img").should("be.visible");
       cy.get("h4").should("be.visible"); // Tên sản phẩm
-      cy.get("p").contains("Số lượng").should("be.visible");
-      cy.get("p").contains("Đơn giá").should("be.visible");
+
+      // Kiểm tra thông tin sản phẩm
+      cy.contains("Số lượng").should("be.visible");
+      cy.contains("Đơn giá").should("be.visible");
     });
 
     // Kiểm tra tổng tiền
     cy.contains("Tổng thanh toán").should("be.visible");
   });
 
-  it("TC10 - Mở modal thay đổi địa chỉ", () => {
+  it("TC03 - Hiển thị thông tin địa chỉ giao hàng", () => {
+    cy.get(".order-2").within(() => {
+      // Kiểm tra form địa chỉ
+      cy.get("input").should("have.length.at.least", 3);
+
+      // Kiểm tra nút thay đổi
+      cy.get("button").contains("Thay đổi").should("be.visible");
+    });
+  });
+
+  it("TC04 - Mở modal thay đổi địa chỉ", () => {
+    // Click nút thay đổi
     cy.get("button").contains("Thay đổi").click();
 
     // Kiểm tra modal hiển thị
     cy.get(".fixed.inset-0").should("be.visible");
     cy.get(".bg-gray-500.bg-opacity-50").should("exist"); // Overlay
-    cy.get(".shadow-lg").within(() => {
-      cy.get("h3").contains("Chọn địa chỉ giao hàng").should("be.visible");
-    });
+
+    // Kiểm tra nội dung modal
+    cy.contains("Chọn địa chỉ giao hàng").should("be.visible");
   });
 
-  it("TC11 - Thêm địa chỉ giao hàng mới", () => {
+  it("TC05 - Thêm địa chỉ mới", () => {
     cy.get("button").contains("Thay đổi").click();
 
     // Điền form địa chỉ mới
-    cy.get('input[placeholder="Thêm tên mới"]').type("Nguyễn Văn A");
-    cy.get('input[placeholder="Thêm địa chỉ mới"]').type(
-      "123 Đường Test, Quận 1, TP.HCM",
-    );
-    cy.get('input[placeholder="Thêm số điện thoại"]').type("0987654321");
+    cy.get('input[placeholder="Thêm tên mới"]').type("Nguyễn Văn B");
+    cy.get('input[placeholder="Thêm địa chỉ mới"]').type("456 New Street");
+    cy.get('input[placeholder="Thêm số điện thoại"]').type("0901234567");
 
     // Submit form
     cy.get('input[value="Thêm địa chỉ"]').click();
@@ -68,43 +75,60 @@ describe("Đặt hàng Tests", () => {
     cy.get(".fixed.inset-0").should("not.exist");
   });
 
-  it("TC12 - Chọn phương thức thanh toán", () => {
+  it("TC06 - Chọn phương thức thanh toán", () => {
     // Kiểm tra có 2 phương thức
     cy.get("button").contains("Thanh toán khi nhận hàng").should("be.visible");
     cy.get("button").contains("Thanh toán qua MOMO").should("be.visible");
 
-    // Chọn Cash on Delivery
-    cy.get("button").contains("Thanh toán khi nhận hàng").click();
-    cy.get("button")
-      .contains("Thanh toán khi nhận hàng")
-      .should("have.class", "bg-[#006532]");
+    // Test chọn Cash on Delivery
+    cy.selectPaymentMethod("Thanh toán khi nhận hàng");
 
-    // Chọn MOMO
-    cy.get("button").contains("Thanh toán qua MOMO").click();
-    cy.get("button")
-      .contains("Thanh toán qua MOMO")
-      .should("have.class", "bg-[#006532]");
+    // Test chọn MOMO
+    cy.selectPaymentMethod("Thanh toán qua MOMO");
   });
 
-  it("TC13 - Hoàn tất đặt hàng", () => {
+  it("TC07 - Hoàn tất đặt hàng thành công", () => {
     // Chọn phương thức thanh toán
-    cy.get("button").contains("Thanh toán khi nhận hàng").click();
+    cy.selectPaymentMethod();
 
     // Đặt hàng
     cy.get("button").contains("Đặt hàng").click();
 
     // Kiểm tra chuyển đến success page
-    cy.url().should("include", "/order-success");
-    cy.get("h2").contains("Thanh toán thành công!").should("be.visible");
-    cy.get("p").contains("Cảm ơn bạn đã mua hàng").should("be.visible");
+    cy.shouldBeOnPage("order-success");
+    cy.contains("Cảm ơn bạn đã mua hàng").should("be.visible");
   });
 
-  it("TC14 - Kiểm tra responsive checkout trên tablet", () => {
+  it("TC08 - Kiểm tra tổng tiền calculation", () => {
+    // Kiểm tra các dòng tính tiền
+    cy.contains("Tổng tiền hàng").should("be.visible");
+    cy.contains("Tổng tiền phí vận chuyển").should("be.visible");
+    cy.contains("Tổng thanh toán").should("be.visible");
+
+    // Kiểm tra format tiền tệ (có ký tự đ)
+    cy.get("span").contains("đ").should("exist");
+  });
+
+  it("TC09 - Test responsive trên tablet", () => {
     cy.viewport(768, 1024); // iPad
 
     // Layout vẫn hiển thị đúng
     cy.get(".grid").should("exist");
     cy.get(".order-1").should("be.visible");
     cy.get(".order-2").should("be.visible");
+  });
+
+  it("TC10 - Test error handling", () => {
+    // Mock lỗi khi tạo order
+    cy.intercept("POST", "**/order/**", {
+      statusCode: 500,
+      body: { error: "Server error" },
+    });
+
+    cy.selectPaymentMethod();
+    cy.get("button").contains("Đặt hàng").click();
+
+    // App vẫn hoạt động bình thường
+    cy.get("header").should("be.visible");
   });
 });

@@ -1,0 +1,10 @@
+{
+    "success": true,
+    "data": {
+        "id": "test-user-123",
+        "firstName": "Test",
+        "lastName": "User",
+        "email": "test@example.com",
+        "url_image": "https://via.placeholder.com/150"
+    }
+}

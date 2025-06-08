@@ -3,17 +3,28 @@
     "data": {
         "products": [
             {
-                "id": "1",
+                "id": "product-1",
                 "name": "Thức ăn cho gà",
                 "priceout": 50000,
+                "weight": 30,
+                "stockQuantity": 100,
                 "category": {
                     "name": "Gà"
                 },
-                "url_images": "{\"url_images1\":\"https://via.placeholder.com/300x300\"}",
-                "stockQuantity": 100,
-                "weight": 30
+                "url_images": "{\"url_images1\":\"https://via.placeholder.com/300\"}"
+            },
+            {
+                "id": "product-2",
+                "name": "Thức ăn cho heo",
+                "priceout": 75000,
+                "weight": 25,
+                "stockQuantity": 50,
+                "category": {
+                    "name": "Heo"
+                },
+                "url_images": "{\"url_images1\":\"https://via.placeholder.com/300\"}"
             }
         ],
-        "total": 1
+        "total": 2
     }
 }

@@ -7,19 +7,7 @@ export default defineConfig({
     viewportHeight: 720,
 
     setupNodeEvents(on, config) {
-      // Valid events only - no uncaught:exception here
-
-      // Handle before:browser:launch
-      on("before:browser:launch", (browser = {}, launchOptions) => {
-        if (browser.name === "chrome") {
-          launchOptions.args.push("--disable-web-security");
-          launchOptions.args.push("--disable-site-isolation-trials");
-          launchOptions.args.push("--disable-features=VizDisplayCompositor");
-        }
-        return launchOptions;
-      });
-
-      // Handle task events
+      // Basic task logging
       on("task", {
         log(message) {
           console.log(message);
@@ -30,29 +18,26 @@ export default defineConfig({
       return config;
     },
 
+    // Test files
     specPattern: "cypress/e2e/**/*.cy.js",
     supportFile: "cypress/support/e2e.js",
 
-    // Basic configuration
+    // Basic settings
     video: false,
     screenshotOnRunFailure: true,
-    chromeWebSecurity: false,
     watchForFileChanges: false,
 
     // Timeouts
-    defaultCommandTimeout: 10000,
-    requestTimeout: 10000,
-    responseTimeout: 10000,
-    pageLoadTimeout: 60000,
+    defaultCommandTimeout: 8000,
+    requestTimeout: 8000,
+    responseTimeout: 8000,
+    pageLoadTimeout: 15000,
 
-    // Retry configuration
+    // Retry on failure
     retries: {
-      runMode: 2,
+      runMode: 1,
       openMode: 0,
     },
-
-    // Test isolation
-    testIsolation: true,
 
     // Environment variables
     env: {
@@ -60,25 +45,9 @@ export default defineConfig({
       testUser: {
         email: "test@example.com",
         password: "password123",
-        userId: "test-user-id",
+        userId: "test-user-123",
+        token: "test-jwt-token",
       },
-      enableMockAPIs: true,
     },
-
-    // Include/exclude patterns
-    excludeSpecPattern: [
-      "**/examples/*",
-      "**/node_modules/**/*",
-      "**/dist/**/*",
-    ],
-  },
-
-  component: {
-    devServer: {
-      framework: "react",
-      bundler: "vite",
-    },
-    viewportWidth: 1000,
-    viewportHeight: 660,
   },
 });
