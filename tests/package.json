@@ -1,0 +1,19 @@
+{
+  "name": "selenium-ecommerce-tests",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "mocha tests/**/*.test.js --timeout 30000 --recursive",
+    "test:cart": "mocha tests/cart.test.js --timeout 30000",
+    "test:checkout": "mocha tests/checkout.test.js --timeout 30000",
+    "test:headless": "HEADLESS=true npm test",
+    "test:edge": "BROWSER=edge npm test",
+    "test:chrome": "BROWSER=chrome npm test"
+  },
+  "devDependencies": {
+    "selenium-webdriver": "^4.15.0",
+    "mocha": "^10.2.0",
+    "chai": "^4.3.10",
+    "chromedriver": "^131.0.0",
+    "edgedriver": "^5.6.1"
+  }
+}
